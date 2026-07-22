@@ -3,7 +3,7 @@
 1. Clone the repository
 
 ```bash
-git clone (https://github.com/abdullah-Dev-12125-code/Weather-app.git)
+git clone https://github.com/abdullah-Dev-12125-code/Weather-app.git
 ```
 
 2. Install dependencies
