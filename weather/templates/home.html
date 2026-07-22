@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Poppins, sans-serif;
+      background: #f4f7fb;
+    }
+
+
+    /* Navbar */
+
+    .nav {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+      color: white;
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+
+
+    /* Search */
+
+    .wrapper {
+      padding: 60px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      width: 420px;
+      background: white;
+      padding: 8px 10px 8px 18px;
+      border-radius: 50px;
+      box-shadow: 0 8px 25px #0002;
+    }
+
+
+    .search-icon {
+      display: flex;
+      margin-right: 12px;
+    }
+
+
+    .search-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: #555;
+    }
+
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+
+
+    .search-box button {
+      border: none;
+      background: black;
+      color: white;
+      padding: 10px 22px;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+
+
+    /* Weather Dashboard */
+
+    .weather-card {
+      margin-top: 40px;
+      width: 1180px;
+      max-width: 100%;
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px #0002;
+    }
+
+
+    .weather-main {
+      display: flex;
+      min-height: 350px;
+    }
+
+
+
+    /* Left */
+
+    .weather-overview {
+      width: 38%;
+      background: linear-gradient(160deg, #16324F, #2E5C82);
+      color: white;
+      padding: 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+
+    .city {
+      margin: 0;
+      font-size: 35px;
+    }
+
+
+    .country {
+      margin-top: 5px;
+      color: #ddd;
+    }
+
+
+    .temp {
+      font-size: 75px;
+      font-weight: bold;
+    }
+
+
+    .description {
+      font-size: 20px;
+    }
+
+
+    .feels-like {
+      margin-top: 6px;
+      color: #ddd;
+      font-size: 14px;
+    }
+
+
+    .region {
+      border-top: 1px solid #ffffff44;
+      padding-top: 15px;
+      color: #ddd;
+    }
+
+
+    .region span {
+      display: block;
+      margin-top: 4px;
+      color: #fff;
+    }
+
+
+
+    /* Right */
+
+    .weather-stats {
+      width: 62%;
+      background: #EAF2F8;
+      padding: 25px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      align-content: center;
+    }
+
+
+    .stat-card {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px #0001;
+    }
+
+
+    .stat-label {
+      font-size: 12px;
+      color: #64748B;
+    }
+
+
+    .stat-value {
+      display: block;
+      margin-top: 8px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+
+
+    /* 7-day forecast */
+
+    .weather-forecast {
+      border-top: 1px solid #e2e8f0;
+      padding: 25px 30px 30px;
+      background: white;
+    }
+
+
+    .forecast-title {
+      margin: 0 0 15px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+
+    .forecast-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 12px;
+    }
+
+
+    .forecast-day {
+      background: #f4f7fb;
+      border-radius: 12px;
+      padding: 14px 8px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+
+    .forecast-day .day-name {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+
+    .forecast-day .day-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 8px 0;
+    }
+
+    .forecast-day .day-icon img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+
+    .forecast-day .day-high {
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+
+    .forecast-day .day-low {
+      font-size: 13px;
+      color: #64748B;
+      margin-left: 4px;
+      font-weight: bold;
+    }
+
+
+
+    /* Mobile */
+
+    @media(max-width:1180px) {
+
+      .weather-stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+    }
+
+
+    @media(max-width:900px) {
+
+      .weather-main {
+        flex-direction: column;
+      }
+
+      .weather-overview,
+      .weather-stats {
+        width: 100%;
+      }
+
+      .weather-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .forecast-row {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+    }
+
+
+    @media(max-width:480px) {
+
+      .forecast-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="nav">
+    Weather App
+  </div>
+
+  <div class="wrapper">
+
+    <form method="GET" class="search-box">
+
+      <span class="search-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+        </svg>
+      </span>
+
+      <input type="text" name="city" placeholder="Enter city name">
+
+      <button type="submit">Search</button>
+
+    </form>
+
+
+    {% if error %}
+    <div style="margin-top:20px;background:#ffdddd;padding:15px;border-radius:10px;">
+      {{ error }}
+    </div>
+    {% endif %}
+
+
+    <div class="weather-card">
+
+      <div class="weather-main">
+
+        <div class="weather-overview">
+
+          <div>
+            <h2 class="city">{{ current.city|default:"NA" }}</h2>
+            <p class="country">{{ current.country|default:"NA" }}</p>
+          </div>
+
+
+          <div>
+
+            <img src="{{ current.icon }}" width="80">
+
+            <span class="temp">
+              {{ current.temp_c|default:"NA" }}°
+            </span>
+
+            <p class="description">
+              {{ current.condition|default:"NA" }}
+            </p>
+
+            <p class="feels-like">
+              Feels like {{ current.feels_like_c|default:"NA" }}°
+            </p>
+
+          </div>
+
+
+          <p class="region">
+
+            {{ current.region|default:"NA" }}
+
+            <span>
+              Local time {{ current.local_time|default:"NA" }}
+            </span>
+
+          </p>
+
+
+        </div>
+
+
+        <div class="weather-stats">
+
+
+          <div class="stat-card">
+            <span class="stat-label">Latitude</span>
+            <span class="stat-value">{{ current.latitude|default:"NA" }}</span>
+          </div>
+
+
+          <div class="stat-card">
+            <span class="stat-label">Longitude</span>
+            <span class="stat-value">{{ current.longitude|default:"NA" }}</span>
+          </div>
+
+
+          <div class="stat-card">
+            <span class="stat-label">Humidity</span>
+            <span class="stat-value">{{ current.humidity|default:"NA" }}%</span>
+          </div>
+
+
+          <div class="stat-card">
+            <span class="stat-label">Pressure</span>
+            <span class="stat-value">{{ current.pressure_mb|default:"NA" }} hPa</span>
+          </div>
+
+
+          <div class="stat-card">
+            <span class="stat-label">Wind</span>
+            <span class="stat-value">{{ current.wind_kph|default:"NA" }} km/h</span>
+          </div>
+
+
+          <div class="stat-card">
+            <span class="stat-label">Wind Direction</span>
+            <span class="stat-value">{{ current.wind_dir|default:"NA" }}</span>
+          </div>
+
+
+          <div class="stat-card">
+            <span class="stat-label">Visibility</span>
+            <span class="stat-value">{{ current.visibility|default:"NA" }} km</span>
+          </div>
+
+
+          <div class="stat-card">
+            <span class="stat-label">Clouds</span>
+            <span class="stat-value">{{ current.cloud|default:"NA" }}%</span>
+          </div>
+
+
+          <div class="stat-card">
+            <span class="stat-label">Min Temp</span>
+            <span class="stat-value">{{ forecast.0.min_temp|default:"NA" }}°</span>
+          </div>
+
+
+          <div class="stat-card">
+            <span class="stat-label">Max Temp</span>
+            <span class="stat-value">{{ forecast.0.max_temp|default:"NA" }}°</span>
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <div class="weather-forecast">
+
+        <p class="forecast-title">
+          7-Day Forecast
+        </p>
+
+
+        <div class="forecast-row">
+
+          {% for day in forecast %}
+
+          <div class="forecast-day">
+
+            <span class="day-name">
+              {{ day.date|default:"NA" }}
+            </span>
+
+
+            <span class="day-icon">
+              <img src="{{ day.icon }}">
+            </span>
+
+
+            <span class="day-high">
+              High
+              {{ day.max_temp|default:"NA" }}°
+            </span>
+
+
+            <span class="day-low">
+              Low
+              {{ day.min_temp|default:"NA" }}°
+            </span>
+
+
+            <small>
+              {{ day.condition|default:"NA" }}
+            </small>
+
+
+          </div>
+
+          {% empty %}
+
+          <p>No forecast available</p>
+
+          {% endfor %}
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>
